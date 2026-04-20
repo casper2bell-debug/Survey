@@ -1,7 +1,5 @@
 
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 // 25 vragen, mobiel‑vriendelijk, survey‑stijl
 const questions = [
@@ -82,25 +80,49 @@ export default function Survey() {
   }
 
 
-  return (
-    <div className="max-w-md mx-auto p-4">
-      <Card className="rounded-2xl shadow">
-        <CardContent className="p-4 space-y-4">
-          <p className="text-sm text-gray-500">Vraag {index + 1} van {questions.length}</p>
-          <h2 className="text-lg font-semibold">{current.text}</h2>
-          <div className="grid grid-cols-1 gap-2">
-            {[1,2,3,4,5].map(v => (
-              <Button key={v} size="lg" variant="outline" onClick={() => handleAnswer(v)}>
-                {v === 1 && "Helemaal oneens"}
-                {v === 2 && "Oneens"}
-                {v === 3 && "Neutraal"}
-                {v === 4 && "Eens"}
-                {v === 5 && "Helemaal eens"}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
+  
+return (
+  <div style={{ maxWidth: 400, margin: "0 auto", padding: 16 }}>
+    {showResult ? (
+      <>
+        <h2>Your Results</h2>
+        <p>🧠 Neurobiology & Clinical Neurosciences: {scores.neuro}</p>
+        <p>🦠 Immunology & Host Defense: {scores.immunology}</p>
+        <p>⚠️ Drug Safety & Toxicology: {scores.toxicology}</p>
+        <p>🧬 Molecular Medicine: {scores.molecular}</p>
+        <p style={{ marginTop: 12, color: "#555" }}>
+          Your highest score indicates your strongest fit.
+        </p>
+      </>
+    ) : (
+      <>
+        <p>
+          Question {index + 1} of {questions.length}
+        </p>
+        <h3>{current.text}</h3>
+
+        {[1, 2, 3, 4, 5].map((v) => (
+          <button
+            key={v}
+            onClick={() => handleAnswer(v)}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "12px",
+              marginBottom: "8px",
+              fontSize: "16px",
+              cursor: "pointer",
+            }}
+          >
+            {v === 1 && "Strongly disagree"}
+            {v === 2 && "Disagree"}
+            {v === 3 && "Neutral"}
+            {v === 4 && "Agree"}
+            {v === 5 && "Strongly agree"}
+          </button>
+        ))}
+      </>
+    )}
+  </div>
+);
+
